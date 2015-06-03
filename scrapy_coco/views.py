@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext, loader
 
 from .models import Challenge
@@ -21,4 +21,6 @@ def solution(request, challenge_id):
 def api(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     challenge_data = challenge.challenge_data
-    return HttpResponse(challenge_data)
+    # use JSON if its dict
+    response = JsonResponse({'data': challenge_data})
+    return HttpResponse(response)
