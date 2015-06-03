@@ -1,0 +1,9 @@
+{{ title }}
+<form method="post" action="{% if title == 'signup' %}{% url 'signup' %}{% else %}{% url 'user_login' %}{% endif %}">
+{% csrf_token %}
+<p><input type="text" name="username" value="" placeholder="Username"></p>
+<p><input type="password" name="password" value="" placeholder="Password"></p>
+{% if title == 'signup' %}<p><input type="password" name="conpassword" value="" placeholder="Confirm Password"></p>{% endif %}
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
