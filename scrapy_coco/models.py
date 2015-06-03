@@ -24,7 +24,7 @@ class Challenge(models.Model):
     does_require_processing = models.BooleanField()
 
     def __str__(self):
-        return self.challenge_text[:10]
+        return "Challenge {}".format(self.id)
 
     # override save() here and make json validation
     # for challenge_data
