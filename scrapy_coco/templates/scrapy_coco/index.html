@@ -1,0 +1,9 @@
+{% if challenges_list %}
+    <ul>
+    {% for challenge_id in challenges_list %}
+        <li><a href="/challenge/{{ challenge_id }}/">Challenge #{{ challenge_id }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>System has no challenges, yet.</p>
+{% endif %}
