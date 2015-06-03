@@ -7,6 +7,7 @@ class Challenge(models.Model):
     # ideally following both should be in HTML, converted 
     # from markdown
     # or render the html at the run time
+    # may be use https://github.com/lepture/mistune
     challenge_text = models.TextField()
     solution = models.TextField()
     # data for API
@@ -16,6 +17,11 @@ class Challenge(models.Model):
     # avoid using null on textfields ...
     # https://docs.djangoproject.com/en/1.8/ref/models/fields/#null
     challenge_data = models.TextField(blank=True)
+    # type of challenge_data
+    is_challenge_data_json = models.BooleanField()
+    # does challenge data require processing or can be 
+    # rendered directly?
+    does_require_processing = models.BooleanField()
 
     def __str__(self):
         return self.challenge_text[:10]
