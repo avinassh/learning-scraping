@@ -6,5 +6,9 @@ Challenges are arranged in levels, with increasing difficulty.
 
 
 ## Todo
+- add proper stylesheets
+- exceptions handling
+- logging
+- tests?
 
 ## Notes
