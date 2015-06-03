@@ -10,7 +10,15 @@ class Challenge(models.Model):
     challenge_text = models.TextField()
     solution = models.TextField()
     # data for API
-    challenge_data = models.TextField()
+    # usually in JSON
+    # some challenges need data to be generated on the fly
+    # https://docs.djangoproject.com/en/1.8/ref/models/fields/#blank
+    # avoid using null on textfields ...
+    # https://docs.djangoproject.com/en/1.8/ref/models/fields/#null
+    challenge_data = models.TextField(blank=True)
 
     def __str__(self):
         return self.challenge_text[:10]
+
+    # override save() here and make json validation
+    # for challenge_data
