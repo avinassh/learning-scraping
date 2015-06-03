@@ -13,4 +13,4 @@ class Challenge(models.Model):
     challenge_data = models.TextField()
 
     def __str__(self):
-        return self.challenge_text
+        return self.challenge_text[:10]
