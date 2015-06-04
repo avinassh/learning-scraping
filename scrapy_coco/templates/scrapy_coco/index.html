@@ -2,11 +2,11 @@
 
 {% block body %}
 {% if challenges_list %}
-    <ul>
-    {% for challenge_id in challenges_list %}
-        <li><a href="/challenge/{{ challenge_id }}/">Challenge #{{ challenge_id }}</a></li>
+    <ol>
+    {% for challenge in challenges_list %}
+        <li><a href="/challenge/{{ challenge.id }}/">{{ challenge.challenge_title }}</a></li>
     {% endfor %}
-    </ul>
+    </ol>
 {% else %}
     <p>System has no challenges, yet.</p>
 {% endif %}

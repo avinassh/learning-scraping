@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<p> Challenge #{{ challenge.id }} </p>
+<p> Challenge #{{ challenge.id }} - {{ challenge.challenge_title }} </p>
 {% autoescape off %}{{ challenge_text_html }}{% endautoescape %}
 <p>Check <a href="/solution/{{ challenge.id }}/">solution</a></p>
 {% endblock %}

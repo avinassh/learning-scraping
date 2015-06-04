@@ -16,7 +16,7 @@ from .markdown_renderer import markdown_to_html
 
 
 def index(request):
-    challenges_list = Challenge.objects.values_list('id', flat=True)
+    challenges_list = Challenge.objects.order_by('id')
     return render(request, 'scrapy_coco/index.html', {'challenges_list': challenges_list})
 
 

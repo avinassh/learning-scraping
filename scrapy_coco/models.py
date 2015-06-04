@@ -4,10 +4,7 @@ from django.db import models
 
 
 class Challenge(models.Model):
-    # ideally following both should be in HTML, converted 
-    # from markdown
-    # or render the html at the run time
-    # may be use https://github.com/lepture/mistune
+    challenge_title = models.CharField(max_length=120)
     challenge_text = models.TextField()
     solution = models.TextField()
     # data for API
@@ -19,12 +16,12 @@ class Challenge(models.Model):
     challenge_data = models.TextField(blank=True)
     # type of challenge_data
     is_challenge_data_json = models.BooleanField()
-    # does challenge data require processing or can be 
+    # does challenge data require processing or can be
     # rendered directly?
     does_require_processing = models.BooleanField()
 
     def __str__(self):
-        return "Challenge {}".format(self.id)
+        return self.challenge_title
 
     # override save() here and make json validation
     # for challenge_data
