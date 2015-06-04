@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from oauth2_provider.views.generic import ProtectedResourceView
 
 from .models import Challenge
 from .challenge_handlers import challenge_handler
@@ -42,6 +43,11 @@ def keys(request):
         ids_and_keys[challenge_id] = key
     return JsonResponse(ids_and_keys)
 
+
+class ApiEndpoint(ProtectedResourceView):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('Hello, OAuth2!')
+
 def user_login(request):
     if request.method == 'GET':
         return render(request, 'scrapy_coco/login.html', {'title': 'login'})
@@ -71,4 +77,3 @@ def signup(request):
 def user_logout(request):
     logout(request)
     return HttpResponse('Logged out')
-

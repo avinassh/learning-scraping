@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from scrapy_coco.views import ApiEndpoint
+
 urlpatterns = [
     url(r'^', include('scrapy_coco.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^api/hello', ApiEndpoint.as_view()),
 ]
