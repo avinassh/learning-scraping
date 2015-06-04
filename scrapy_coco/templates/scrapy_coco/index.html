@@ -4,7 +4,7 @@
 {% if challenges_list %}
     <ol>
     {% for challenge in challenges_list %}
-        <li><a href="/challenge/{{ challenge.id }}/">{{ challenge.challenge_title }}</a></li>
+        <li><a href="{% url 'challenge' challenge.id %}">{{ challenge.challenge_title }}</a></li>
     {% endfor %}
     </ol>
 {% else %}
