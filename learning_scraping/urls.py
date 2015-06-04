@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^', include('scrapy_coco.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
