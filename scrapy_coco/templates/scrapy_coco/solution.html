@@ -1,5 +1,7 @@
 {% if solution %}
-    <p> {{ solution|linebreaksbr }} </p>
+    {% autoescape off %}
+    <p> {{ solution }} </p>
+    {% endautoescape %}
 {% else %}
     <p>This challenge has no solutions</p>
 {% endif %}

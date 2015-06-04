@@ -1,1 +1,6 @@
 Django==1.8.2
+django-braces==1.8.0
+django-oauth-toolkit==0.8.1
+mistune==0.5.1
+oauthlib==0.7.2
+six==1.9.0

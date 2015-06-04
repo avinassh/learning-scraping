@@ -1,5 +1,6 @@
 import hashlib
 
+import mistune
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext, loader
@@ -19,13 +20,14 @@ def index(request):
 
 def challenge(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    return render(request, 'scrapy_coco/challenge.html', {'challenge': challenge})
+    challenge_text_html = mistune.markdown(challenge.challenge_text)
+    return render(request, 'scrapy_coco/challenge.html', {'challenge': challenge, 'challenge_text_html': challenge_text_html})
 
 
 def solution(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    solution = challenge.solution
-    return render(request, 'scrapy_coco/solution.html', {'solution': solution})
+    solution_html = mistune.markdown(challenge.solution)
+    return render(request, 'scrapy_coco/solution.html', {'solution': solution_html})
 
 
 @csrf_exempt
