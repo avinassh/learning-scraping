@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block body %}
 {% if challenges_list %}
     <ul>
     {% for challenge_id in challenges_list %}
@@ -7,3 +10,4 @@
 {% else %}
     <p>System has no challenges, yet.</p>
 {% endif %}
+{% endblock body %}

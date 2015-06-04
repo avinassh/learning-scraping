@@ -1,7 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
 {% if solution %}
-    {% autoescape off %}
-    <p> {{ solution }} </p>
-    {% endautoescape %}
+    {% autoescape off %}{{ solution }}{% endautoescape %}
 {% else %}
     <p>This challenge has no solutions</p>
 {% endif %}
+{% endblock body %}

@@ -9,8 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 
+
 from .models import Challenge
 from .challenge_handlers import challenge_handler
+from .markdown_renderer import markdown_to_html
 
 
 def index(request):
@@ -20,13 +22,13 @@ def index(request):
 
 def challenge(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    challenge_text_html = mistune.markdown(challenge.challenge_text)
+    challenge_text_html = markdown_to_html(challenge.challenge_text)
     return render(request, 'scrapy_coco/challenge.html', {'challenge': challenge, 'challenge_text_html': challenge_text_html})
 
 
 def solution(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    solution_html = mistune.markdown(challenge.solution)
+    solution_html = markdown_to_html(challenge.solution)
     return render(request, 'scrapy_coco/solution.html', {'solution': solution_html})
 
 
