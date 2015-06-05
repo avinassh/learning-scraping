@@ -38,15 +38,15 @@ def random_quote():
     return random.choice(python_quotes)
 
 
-def handler_challenge_3(request, challenge_id):
+def handler_nice_quotes(request, challenge_id):
     return random_quote()
 
 
-def handler_challenge_4(request, challenge_id):
+def handler_hello_json(request, challenge_id):
     return JsonResponse({'data': random_quote()})
 
 
-def handler_challenge_9(request, challenge_id):
+def handler_pages_and_more(request, challenge_id):
     pagination_id = request.GET.get('next', '0')
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     if pagination_id in ['0', '1', '2', '3']:
@@ -56,21 +56,21 @@ def handler_challenge_9(request, challenge_id):
     raise Http404
 
 
-def handler_challenge_11(request, challenge_id):
+def handler_sat_results(request, challenge_id):
     if request.method == 'GET':
         raise PermissionDenied()
     if request.method == 'POST':
         student_id = request.POST.get('studentid', '0')
         return student_id
 
-def handler_challenge_13(request, challenge_id):
+def handler_agent_python(request, challenge_id):
     if request.META['HTTP_USER_AGENT'] == 'Python v3/ Scrapy Coco!':
         return JsonResponse({'status': 'success'})
     else:
         raise PermissionDenied()
 
 
-def handler_challenge_14(request, challenge_id):
+def handler_you_need_keys(request, challenge_id):
     if request.method == 'GET':
         raise PermissionDenied()
     if request.method == 'POST':
@@ -82,6 +82,6 @@ def handler_challenge_14(request, challenge_id):
         return JsonResponse({'status': 'fail', 'reason': 'Invalid token'})
 
 
-all_challenge_handlers = {'3': handler_challenge_3, '4': handler_challenge_4,
-                          '9': handler_challenge_9, '11': handler_challenge_11, 
-                          '13': handler_challenge_13, '14': handler_challenge_14}
+all_challenge_handlers = {'3': handler_nice_quotes, '4': handler_hello_json,
+                          '9': handler_pages_and_more, '11': handler_sat_results, 
+                          '13': handler_agent_python, '14': handler_you_need_keys}
