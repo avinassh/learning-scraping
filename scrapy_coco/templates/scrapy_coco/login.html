@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block body %}
 {{ title }}
 <form method="post" action="{% if title == 'signup' %}{% url 'signup' %}{% else %}{% url 'user_login' %}{% endif %}">
 {% csrf_token %}
@@ -7,3 +10,4 @@
 <input type="submit" value="login" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
+{% endblock body %}
