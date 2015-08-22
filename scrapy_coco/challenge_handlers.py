@@ -20,13 +20,8 @@ from .python_quotes import python_quotes
 def challenge_handler(request, challenge_id):
     # should return HttpResponse
     challenge = get_object_or_404(Challenge, pk=challenge_id)
-    if challenge.does_require_processing:
-        if challenge_id in all_challenge_handlers.keys():
-            return all_challenge_handlers[challenge_id](request, challenge_id)
-        else:
-            # raise unexpected exception
-            # log it
-            pass
+    if challenge.handler:
+        return all_challenge_handlers[challenge.handler](request, challenge_id)
     else:
         if challenge.is_api_data_json:
             return JsonResponse(json.loads(challenge.api_data))
@@ -38,7 +33,7 @@ def random_quote():
     return random.choice(python_quotes)
 
 
-def handler_nice_quotes(request, challenge_id):
+def handler_nice_python_quotes(request, challenge_id):
     return random_quote()
 
 
@@ -63,14 +58,14 @@ def handler_sat_results(request, challenge_id):
         student_id = request.POST.get('studentid', '0')
         return student_id
 
-def handler_agent_python(request, challenge_id):
+def handler_secret_agent_python(request, challenge_id):
     if request.META['HTTP_USER_AGENT'] == 'Python v3/ Scrapy Coco!':
         return JsonResponse({'status': 'success'})
     else:
         raise PermissionDenied()
 
 
-def handler_you_need_keys(request, challenge_id):
+def handler_you_need_em_keys(request, challenge_id):
     if request.method == 'GET':
         raise PermissionDenied()
     if request.method == 'POST':
@@ -82,6 +77,11 @@ def handler_you_need_keys(request, challenge_id):
         return JsonResponse({'status': 'fail', 'reason': 'Invalid token'})
 
 
-all_challenge_handlers = {'3': handler_nice_quotes, '4': handler_hello_json,
-                          '9': handler_pages_and_more, '11': handler_sat_results, 
-                          '13': handler_agent_python, '14': handler_you_need_keys}
+all_challenge_handlers = {
+    'handler_nice_python_quotes': handler_nice_python_quotes,
+    'handler_hello_json': handler_hello_json,
+    'handler_pages_and_more': handler_pages_and_more,
+    'handler_sat_results': handler_sat_results,
+    'handler_secret_agent_python': handler_secret_agent_python,
+    'handler_you_need_em_keys': handler_you_need_em_keys
+    }
