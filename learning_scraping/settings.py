@@ -102,3 +102,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = 'user_login'
+
+# datastore specific settings
+DATASTORE_DIR = 'datastore'
+DATASTORE_METADATA = 'metadata.yaml'
+DATASTORE_PATH = os.path.join(BASE_DIR, DATASTORE_DIR)
+METADATA_PATH = os.path.join(DATASTORE_PATH, DATASTORE_METADATA)
