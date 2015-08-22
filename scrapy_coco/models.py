@@ -17,8 +17,9 @@ class Challenge(models.Model):
     # type of api_data, either json or not
     is_api_data_json = models.BooleanField()
     # does challenge data require processing or can be
-    # rendered directly?
-    does_require_processing = models.BooleanField()
+    # rendered directly? If it former, mention the handler name
+    # or leave it empty.
+    handler = models.CharField(max_length=60, blank=True)
 
     def __str__(self):
         return self.challenge_title
