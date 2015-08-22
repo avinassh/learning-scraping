@@ -28,10 +28,10 @@ def challenge_handler(request, challenge_id):
             # log it
             pass
     else:
-        if challenge.is_challenge_data_json:
-            return JsonResponse(json.loads(challenge.challenge_data))
+        if challenge.is_api_data_json:
+            return JsonResponse(json.loads(challenge.api_data))
         else:
-            return challenge.challenge_data
+            return challenge.api_data
 
 
 def random_quote():
@@ -50,9 +50,9 @@ def handler_pages_and_more(request, challenge_id):
     pagination_id = request.GET.get('next', '0')
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     if pagination_id in ['0', '1', '2', '3']:
-        return JsonResponse(json.loads(challenge.challenge_data)[pagination_id])
+        return JsonResponse(json.loads(challenge.api_data)[pagination_id])
     elif pagination_id == 'all':
-        return JsonResponse(json.loads(challenge.challenge_data))
+        return JsonResponse(json.loads(challenge.api_data))
     raise Http404
 
 

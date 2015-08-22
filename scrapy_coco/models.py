@@ -13,9 +13,9 @@ class Challenge(models.Model):
     # https://docs.djangoproject.com/en/1.8/ref/models/fields/#blank
     # avoid using null on textfields ...
     # https://docs.djangoproject.com/en/1.8/ref/models/fields/#null
-    challenge_data = models.TextField(blank=True)
-    # type of challenge_data
-    is_challenge_data_json = models.BooleanField()
+    api_data = models.TextField(blank=True)
+    # type of api_data, either json or not
+    is_api_data_json = models.BooleanField()
     # does challenge data require processing or can be
     # rendered directly?
     does_require_processing = models.BooleanField()
