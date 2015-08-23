@@ -19,7 +19,7 @@ from .python_quotes import python_quotes
 
 def challenge_handler(request, challenge_id):
     # should return HttpResponse
-    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
     if challenge.handler:
         return all_challenge_handlers[challenge.handler](request, challenge_id)
     else:
