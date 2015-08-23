@@ -20,9 +20,11 @@ class Challenge(models.Model):
     # rendered directly? If it former, mention the handler name
     # or leave it empty.
     handler = models.CharField(max_length=60, blank=True)
+    challenge_id = models.IntegerField()
 
     def __str__(self):
         return self.challenge_title
 
-    # override save() here and make json validation
-    # for challenge_data
+    def save(self):
+        self.challenge_id = Challenge.objects.count()
+        super(Challenge, self).save()
