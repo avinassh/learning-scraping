@@ -22,14 +22,12 @@ def index(request):
 
 def challenge(request, challenge_id):
     challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
-    challenge_text_html = markdown_to_html(challenge.challenge_text)
-    return render(request, 'challenges/challenge.html', {'challenge': challenge, 'challenge_text_html': challenge_text_html})
+    return render(request, 'challenges/challenge.html', {'challenge': challenge, 'challenge_text_html': challenge.challenge_text})
 
 
 def solution(request, challenge_id):
     challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
-    solution_html = markdown_to_html(challenge.solution)
-    return render(request, 'challenges/solution.html', {'solution': solution_html})
+    return render(request, 'challenges/solution.html', {'solution': challenge.solution})
 
 
 @csrf_exempt
