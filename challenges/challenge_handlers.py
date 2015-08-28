@@ -21,7 +21,7 @@ def challenge_handler(request, challenge_id):
     # should return HttpResponse
     challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
     if challenge.handler:
-        return all_challenge_handlers[challenge.handler](request, challenge_id)
+        return all_challenge_handlers[challenge.handler](request, challenge)
     else:
         if challenge.is_api_data_json:
             return JsonResponse(json.loads(challenge.api_data))
@@ -33,17 +33,16 @@ def random_quote():
     return random.choice(python_quotes)
 
 
-def handler_nice_python_quotes(request, challenge_id):
+def handler_nice_python_quotes(request, challenge):
     return random_quote()
 
 
-def handler_hello_json(request, challenge_id):
+def handler_hello_json(request, challenge):
     return JsonResponse({'data': random_quote()})
 
 
-def handler_pages_and_more(request, challenge_id):
+def handler_pages_and_more(request, challenge):
     pagination_id = request.GET.get('next', '0')
-    challenge = get_object_or_404(Challenge, pk=challenge_id)
     if pagination_id in ['0', '1', '2', '3']:
         return JsonResponse(json.loads(challenge.api_data)[pagination_id])
     elif pagination_id == 'all':
@@ -51,27 +50,27 @@ def handler_pages_and_more(request, challenge_id):
     raise Http404
 
 
-def handler_sat_results(request, challenge_id):
+def handler_sat_results(request, challenge):
     if request.method == 'GET':
         raise PermissionDenied()
     if request.method == 'POST':
         student_id = request.POST.get('studentid', '0')
         return student_id
 
-def handler_secret_agent_python(request, challenge_id):
+def handler_secret_agent_python(request, challenge):
     if request.META['HTTP_USER_AGENT'] == 'Python v3/ Scrapy Coco!':
         return JsonResponse({'status': 'success'})
     else:
         raise PermissionDenied()
 
 
-def handler_you_need_em_keys(request, challenge_id):
+def handler_you_need_em_keys(request, challenge):
     if request.method == 'GET':
         raise PermissionDenied()
     if request.method == 'POST':
         token = request.META.get('HTTP_TOKEN')
         username = request.META.get('HTTP_USERNAME')
-        auth_token = hashlib.md5(str.encode('{}challenge{}'.format(username, challenge_id))).hexdigest()
+        auth_token = hashlib.md5(str.encode('{}challenge{}'.format(username, challenge.id))).hexdigest()
         if token == auth_token:
            return JsonResponse({'status': 'success'})
         return JsonResponse({'status': 'fail', 'reason': 'Invalid token'})
