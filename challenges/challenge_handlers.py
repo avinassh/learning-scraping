@@ -37,11 +37,17 @@ def handler_hello_json(request, challenge):
 
 
 def handler_pages_and_more(request, challenge):
+    # TODO: refactor this, use URL constructor from view name or something
+    url = 'http://localhost:8000/api/{challenge_id}/?next={pagination_id}'
     pagination_id = request.GET.get('next', '0')
-    if pagination_id in ['0', '1', '2', '3']:
-        return JsonResponse(json.loads(challenge.api_data)[pagination_id])
-    elif pagination_id == 'all':
+    if pagination_id == 'all':
         return JsonResponse(json.loads(challenge.api_data))
+    if pagination_id in ['0', '1', '2', '3']:
+        response_data = json.loads(challenge.api_data)[pagination_id]
+        if not pagination_id == '3':
+            next_id = int(pagination_id) + 1
+            response_data['url'] = url.format(challenge_id=challenge.challenge_id, pagination_id=next_id)
+        return JsonResponse(response_data)
     raise Http404
 
 
