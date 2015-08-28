@@ -8,7 +8,6 @@ from django.template import RequestContext, loader
 from django.core.exceptions import PermissionDenied
 
 from .models import Challenge
-from .python_quotes import python_quotes
 
 # Since each challenges are different and
 # need to provide different functions and features
@@ -29,16 +28,12 @@ def challenge_handler(request, challenge_id):
             return challenge.api_data
 
 
-def random_quote():
-    return random.choice(python_quotes)
-
-
 def handler_nice_python_quotes(request, challenge):
-    return random_quote()
+    return random.choice(json.loads(challenge.api_data))
 
 
 def handler_hello_json(request, challenge):
-    return JsonResponse({'data': random_quote()})
+    return JsonResponse({'data': random.choice(json.loads(challenge.api_data))})
 
 
 def handler_pages_and_more(request, challenge):
