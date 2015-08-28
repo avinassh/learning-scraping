@@ -2,9 +2,8 @@ import json
 import random
 import hashlib
 
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, JsonResponse, Http404, HttpResponseNotAllowed, HttpResponseForbidden
-from django.template import RequestContext, loader
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse, Http404
 from django.core.exceptions import PermissionDenied
 
 from .models import Challenge
@@ -33,7 +32,8 @@ def handler_nice_python_quotes(request, challenge):
 
 
 def handler_hello_json(request, challenge):
-    return JsonResponse({'data': random.choice(json.loads(challenge.api_data))})
+    data = {'data': random.choice(json.loads(challenge.api_data))}
+    return JsonResponse(data)
 
 
 def handler_pages_and_more(request, challenge):
@@ -46,7 +46,8 @@ def handler_pages_and_more(request, challenge):
         response_data = json.loads(challenge.api_data)[pagination_id]
         if not pagination_id == '3':
             next_id = int(pagination_id) + 1
-            response_data['url'] = url.format(challenge_id=challenge.challenge_id, pagination_id=next_id)
+            response_data['url'] = url.format(
+                challenge_id=challenge.challenge_id, pagination_id=next_id)
         return JsonResponse(response_data)
     raise Http404
 
@@ -57,6 +58,7 @@ def handler_sat_results(request, challenge):
     if request.method == 'POST':
         student_id = request.POST.get('studentid', '0')
         return student_id
+
 
 def handler_secret_agent_python(request, challenge):
     if request.META['HTTP_USER_AGENT'] == 'Python v3/ Scrapy Coco!':
@@ -71,9 +73,10 @@ def handler_you_need_em_keys(request, challenge):
     if request.method == 'POST':
         token = request.META.get('HTTP_TOKEN')
         username = request.META.get('HTTP_USERNAME')
-        auth_token = hashlib.md5(str.encode('{}challenge{}'.format(username, challenge.id))).hexdigest()
+        auth_token = hashlib.md5(str.encode('{}challenge{}'.format(
+            username, challenge.id))).hexdigest()
         if token == auth_token:
-           return JsonResponse({'status': 'success'})
+            return JsonResponse({'status': 'success'})
         return JsonResponse({'status': 'fail', 'reason': 'Invalid token'})
 
 
