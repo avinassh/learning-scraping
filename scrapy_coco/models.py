@@ -26,5 +26,11 @@ class Challenge(models.Model):
         return self.challenge_title
 
     def save(self):
+        # `save` is overridden here to add `challenge_id`. In current
+        # implementation `challenge_id` starts with 0 and gets incremented
+        # by 1 for every insertion.
+        #
+        # However following code is...not really correct and will have
+        # race condition and other concurrency issues.
         self.challenge_id = Challenge.objects.count()
         super(Challenge, self).save()
