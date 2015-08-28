@@ -7,14 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('scrapy_coco', '0003_auto_20150603_0808'),
+        ('challenges', '0001_initial'),
     ]
 
     operations = [
-        migrations.AddField(
+        migrations.AlterField(
             model_name='challenge',
-            name='challenge_title',
-            field=models.CharField(max_length=120, default='Challenge'),
-            preserve_default=False,
+            name='challenge_data',
+            field=models.TextField(blank=True),
         ),
     ]

@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('scrapy_coco', '0005_auto_20150809_1703'),
+        ('challenges', '0005_auto_20150809_1703'),
     ]
 
     operations = [

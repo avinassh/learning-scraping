@@ -17,19 +17,19 @@ from .markdown_renderer import markdown_to_html
 
 def index(request):
     challenges_list = Challenge.objects.order_by('id')
-    return render(request, 'scrapy_coco/index.html', {'challenges_list': challenges_list})
+    return render(request, 'challenges/index.html', {'challenges_list': challenges_list})
 
 
 def challenge(request, challenge_id):
     challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
     challenge_text_html = markdown_to_html(challenge.challenge_text)
-    return render(request, 'scrapy_coco/challenge.html', {'challenge': challenge, 'challenge_text_html': challenge_text_html})
+    return render(request, 'challenges/challenge.html', {'challenge': challenge, 'challenge_text_html': challenge_text_html})
 
 
 def solution(request, challenge_id):
     challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
     solution_html = markdown_to_html(challenge.solution)
-    return render(request, 'scrapy_coco/solution.html', {'solution': solution_html})
+    return render(request, 'challenges/solution.html', {'solution': solution_html})
 
 
 @csrf_exempt
@@ -48,7 +48,7 @@ def keys(request):
 
 def user_login(request):
     if request.method == 'GET':
-        return render(request, 'scrapy_coco/login.html', {'title': 'login'})
+        return render(request, 'challenges/login.html', {'title': 'login'})
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -62,7 +62,7 @@ def user_login(request):
 
 def signup(request):
     if request.method == 'GET':
-        return render(request, 'scrapy_coco/login.html', {'title': 'signup'})
+        return render(request, 'challenges/login.html', {'title': 'signup'})
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
