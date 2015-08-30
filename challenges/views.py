@@ -33,7 +33,8 @@ def solution(request, challenge_id):
 
 @csrf_exempt
 def api(request, challenge_id):
-    return HttpResponse(challenge_handler(request, challenge_id))
+    challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
+    return HttpResponse(challenge_handler(request, challenge))
 
 
 @login_required

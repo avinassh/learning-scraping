@@ -2,11 +2,8 @@ import json
 import random
 import hashlib
 
-from django.shortcuts import get_object_or_404
 from django.http import JsonResponse, Http404
 from django.core.exceptions import PermissionDenied
-
-from .models import Challenge
 
 # Since each challenges are different and
 # need to provide different functions and features
@@ -15,9 +12,8 @@ from .models import Challenge
 # a HttpResponse object
 
 
-def challenge_handler(request, challenge_id):
+def challenge_handler(request, challenge):
     # should return HttpResponse
-    challenge = get_object_or_404(Challenge, challenge_id=challenge_id)
     if challenge.handler:
         return all_challenge_handlers[challenge.handler](request, challenge)
     else:
